@@ -1,0 +1,3 @@
+// Initialisierung
+drawCompassLabels();
+drawTiltLabels();
