@@ -1,22 +1,14 @@
 // Counter System
-// Lokaler Counter (localStorage)
-let localVisits = parseInt(localStorage.getItem('geowaverVisits') || '0');
-let localCalculations = parseInt(localStorage.getItem('geowaverCalculations') || '0');
-
-// Globaler Counter (API-basiert) - Optional
+// Globaler Counter (API-basiert)
 let globalVisits = 0;
 let globalCalculations = 0;
 
 // Beim Laden der Seite
 function initializeCounters() {
-    // Lokaler Besuchscounter erhöhen
-    localVisits++;
-    localStorage.setItem('geowaverVisits', localVisits.toString());
-    
     // Counters anzeigen
     updateCounterDisplay();
     
-    // Optional: Globalen Counter laden (wenn Service aktiviert)
+    // Globalen Counter laden
     loadGlobalCounters();
 }
 
@@ -26,21 +18,6 @@ function updateCounterDisplay() {
     
     const counterHTML = `
         <div class="counter-stats">
-            <div class="counter-item">
-                <span class="counter-icon">👁️</span>
-                <div class="counter-info">
-                    <div class="counter-label">${t.counterYourVisits}</div>
-                    <div class="counter-value">${localVisits}</div>
-                </div>
-            </div>
-            <div class="counter-item">
-                <span class="counter-icon">📊</span>
-                <div class="counter-info">
-                    <div class="counter-label">${t.counterYourCalcs}</div>
-                    <div class="counter-value">${localCalculations}</div>
-                </div>
-            </div>
-            ${globalVisits > 0 ? `
             <div class="counter-item global">
                 <span class="counter-icon">🌍</span>
                 <div class="counter-info">
@@ -55,7 +32,6 @@ function updateCounterDisplay() {
                     <div class="counter-value">${globalCalculations}</div>
                 </div>
             </div>
-            ` : ''}
         </div>
     `;
     
@@ -74,13 +50,8 @@ function updateCounterDisplay() {
 
 // Berechnung durchgeführt - Counter erhöhen
 function incrementCalculationCounter() {
-    localCalculations++;
-    localStorage.setItem('geowaverCalculations', localCalculations.toString());
-    
-    // Optional: Globalen Counter erhöhen
+    // Globalen Counter erhöhen
     incrementGlobalCalculation();
-    
-    updateCounterDisplay();
 }
 
 // ===== GLOBALER COUNTER (Optional - mit CountAPI) =====
