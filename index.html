@@ -1,270 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>🌍 GeoWaver Look through the Earth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<style>
-* { box-sizing: border-box; margin:0; padding:0; }
-body { font-family: 'Segoe UI', system-ui, sans-serif; display:flex; height:100vh; background:#1a1a2e; color:white; overflow:hidden; }
-#map { flex:1; min-width:0; }
-.controls-panel { width:450px; background:#16213e; display:flex; flex-direction:column; box-shadow:-5px 0 20px rgba(0,0,0,0.5); overflow-y:auto; }
-.header { padding:24px; background:linear-gradient(135deg,#0f3460 0%,#16213e 100%); border-bottom:2px solid #0f3460; text-align:center; }
-.header h1 { font-size:28px; margin-bottom:8px; }
-.header p { font-size:14px; opacity:0.8; line-height:1.5; }
-.lang-switch { margin-top:10px; text-align:center; }
-.lang-switch button { margin:0 5px; padding:6px 12px; border-radius:5px; border:none; cursor:pointer; background:#e63946; color:white; font-weight:bold; }
-.status { padding:16px 24px; background:rgba(15,52,96,0.5); border-bottom:1px solid rgba(255,255,255,0.1); font-size:14px; }
-.displays { flex:1; padding:24px; display:flex; flex-direction:column; gap:32px; overflow-y:auto; }
-.display-section { background:rgba(15,52,96,0.3); border-radius:16px; padding:20px; border:2px solid rgba(255,255,255,0.1); }
-.display-title { font-size:18px; font-weight:bold; margin-bottom:16px; text-align:center; opacity:0.9; }
-
-.compass-display { position:relative; width:280px; height:280px; margin:0 auto; border-radius:50%; background:radial-gradient(circle, rgba(15,52,96,0.5) 0%, rgba(22,33,62,0.8) 100%); border:3px solid rgba(255,255,255,0.3); box-shadow:inset 0 0 40px rgba(0,0,0,0.5),0 0 30px rgba(15,52,96,0.5); }
-.compass-center { position:absolute; width:16px; height:16px; background:radial-gradient(circle,#fff,#ccc); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); box-shadow:0 0 15px rgba(255,255,255,0.8); z-index:10; }
-.compass-needle { position:absolute; width:6px; height:120px; background:linear-gradient(to top,#e63946,#ff6b6b,#ffccd5); top:50%; left:50%; transform-origin:bottom center; transform:translate(-50%,-100%) rotate(0deg); border-radius:3px 3px 0 0; box-shadow:0 0 20px rgba(230,57,70,0.8); transition:transform 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);}
-.compass-label { position:absolute; font-size:18px; font-weight:bold; color:white; text-shadow:2px 2px 4px rgba(0,0,0,0.8); }
-
-.tilt-display { position:relative; width:280px; height:200px; margin:0 auto; }
-.tilt-quarter-circle { position:absolute; width:240px; height:240px; top:0; left:0; border:3px solid rgba(255,255,255,0.3); background:radial-gradient(circle at top left, rgba(15,52,96,0.5) 0%, rgba(22,33,62,0.8) 100%); box-shadow:inset -5px -5px 20px rgba(0,0,0,0.5),0 0 30px rgba(15,52,96,0.5); border-radius:0 0 240px 0; border-top:none; border-left:none; }
-.tilt-base-line { position:absolute; top:0; left:0; width:240px; height:3px; background:rgba(255,255,255,0.4); }
-.tilt-vertical-line { position:absolute; top:0; left:0; width:3px; height:240px; background:rgba(255,255,255,0.4); }
-.tilt-center { position:absolute; width:20px; height:20px; background:radial-gradient(circle,#fff,#ccc); border-radius:50%; top:-10px; left:-10px; box-shadow:0 0 15px rgba(255,255,255,0.8); z-index:10; }
-.tilt-needle { position:absolute; width:4px; height:180px; background:linear-gradient(to bottom,#f77f00,#fcbf49,#ffd97d); top:0; left:0; transform-origin:top center; transform:rotate(-90deg); border-radius:0 0 3px 3px; box-shadow:0 0 20px rgba(247,127,0,0.8); transition:transform 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);}
-.tilt-label { position:absolute; font-size:13px; color:rgba(255,255,255,0.7); font-weight:bold; }
-
-.info-box { margin-top:16px; padding:16px; background:rgba(0,0,0,0.3); border-radius:8px; text-align:center; line-height:1.8; }
-.info-value { font-size:20px; font-weight:bold; color:#4ecdc4; }
-
-.reset-btn { margin:0 24px 24px 24px; padding:14px; background:linear-gradient(135deg,#e63946,#a4133c); border:none; border-radius:10px; color:white; font-size:16px; font-weight:bold; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 15px rgba(230,57,70,0.4); }
-.reset-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(230,57,70,0.6); }
-
-.glow-marker { filter:drop-shadow(0 0 8px #ffeb3b) drop-shadow(0 0 12px #ffeb3b) drop-shadow(0 0 16px #ffd700); transition:transform 0.2s linear; }
-
-@media (max-width:1024px){ body{flex-direction:column;}#map{height:50%;} .controls-panel{width:100%;height:50%;} }
-</style>
+    <meta charset="UTF-8" />
+    <title>🌍 GeoWaver Look through the Earth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div id="map"></div>
-<div class="controls-panel">
-  <div class="header">
-    <h1>🌍 GeoWaver Look through the Earth</h1>
-    <p>Click twice on the map: first your position, then your friend's position. The displays will show you where to look through the Earth!</p>
-    <div class="lang-switch">
-      <button onclick="setLanguage('en')">English</button>
-      <button onclick="setLanguage('de')">Deutsch</button>
+    <div id="map"></div>
+    
+    <div class="controls-panel">
+        <div class="status" id="status">Click on the map for <strong>your position</strong></div>
+        
+        <div class="scrollable-content">
+            <div class="header">
+                <h1>🌍 GeoWaver Look through the Earth</h1>
+                <p>Click twice on the map: first your position, then your friend's position. The displays will show you where to look through the Earth!</p>
+                <div class="lang-switch">
+                    <button onclick="setLanguage('en')">English</button>
+                    <button onclick="setLanguage('de')">Deutsch</button>
+                </div>
+            </div>
+            
+            <div class="displays">
+                <div class="display-section">
+                    <div class="display-title">🧭 Compass</div>
+                    <div class="compass-display" id="compass">
+                        <div class="compass-needle" id="compassNeedle"></div>
+                        <div class="compass-center"></div>
+                    </div>
+                    <div class="info-box" id="compassInfo">—</div>
+                </div>
+                
+                <div class="display-section">
+                    <div class="display-title">📐 Tilt</div>
+                    <div class="tilt-display" id="tilt">
+                        <div class="tilt-quarter-circle" id="quarterCircle"></div>
+                        <div class="tilt-base-line"></div>
+                        <div class="tilt-vertical-line"></div>
+                        <div class="tilt-needle" id="tiltNeedle"></div>
+                        <div class="tilt-center"></div>
+                    </div>
+                    <div class="info-box" id="tiltInfo">—</div>
+                </div>
+            </div>
+            
+            <button class="reset-btn" onclick="reset()" id="resetBtn">🔄 Reset</button>
+        </div>
     </div>
-  </div>
-  <div class="status" id="status">Click on the map for <strong>your position</strong></div>
-  <div class="displays">
-    <div class="display-section">
-      <div class="display-title">🧭 Compass</div>
-      <div class="compass-display" id="compass">
-        <div class="compass-needle" id="compassNeedle"></div>
-        <div class="compass-center"></div>
-      </div>
-      <div class="info-box" id="compassInfo">—</div>
-    </div>
-    <div class="display-section">
-      <div class="display-title">📐 Tilt</div>
-      <div class="tilt-display" id="tilt">
-        <div class="tilt-quarter-circle" id="quarterCircle"></div>
-        <div class="tilt-base-line"></div>
-        <div class="tilt-vertical-line"></div>
-        <div class="tilt-needle" id="tiltNeedle"></div>
-        <div class="tilt-center"></div>
-      </div>
-      <div class="info-box" id="tiltInfo">—</div>
-    </div>
-  </div>
-  <button class="reset-btn" onclick="reset()" id="resetBtn">🔄 Reset</button>
-</div>
-
-<script>
-// === Translations + Language ===
-const translations = {
-  en:{headerTitle:"🌍 GeoWaver Look through the Earth",headerDesc:"Click twice on the map: first your position, then your friend's position. The displays will show you where to look through the Earth!",statusStart:"Click on the map for <strong>your position</strong>",statusFriend:"Now click on <strong>your friend's position</strong>",statusDone:"✅ Calculation done! Click again for new positions",youMarker:"👤 You",friendMarker:"👋 Your Friend",compassInfo:"Compass direction",tiltInfo:"Tilt angle",tiltDesc:["almost horizontal","slightly downward","steep downward","almost vertical"],reset:"🔄 Reset"},
-  de:{headerTitle:"🌍 GeoWaver Schau durch die Erde",headerDesc:"Klicke zweimal auf die Karte: Erst deine Position, dann die deines Freundes. Die Anzeigen zeigen dir, in welche Richtung du durch die Erde schauen musst!",statusStart:"Klicke auf die Karte für <strong>deine Position</strong>",statusFriend:"Jetzt klicke auf die <strong>Position deines Freundes</strong>",statusDone:"✅ Berechnung abgeschlossen! Klicke erneut für neue Positionen",youMarker:"👤 Du",friendMarker:"👋 Dein Freund",compassInfo:"Himmelsrichtung",tiltInfo:"Neigungswinkel",tiltDesc:["fast horizontal","schräg nach unten","steil nach unten","fast senkrecht"],reset:"🔄 Zurücksetzen"}
-};
-let currentLang='en';
-function setLanguage(lang){
-  currentLang=lang;
-  document.querySelector('.header h1').textContent=translations[lang].headerTitle;
-  document.querySelector('.header p').innerHTML=translations[lang].headerDesc;
-  document.getElementById('resetBtn').textContent=translations[lang].reset;
-  if(clickCount===0) document.getElementById('status').innerHTML=translations[lang].statusStart;
-  else if(clickCount===1) document.getElementById('status').innerHTML=translations[lang].statusFriend;
-  else document.getElementById('status').innerHTML=translations[lang].statusDone;
-  calculateDirection();
-}
-
-// === Map ===
-const map=L.map('map',{worldCopyJump:true}).setView([20,0],2);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(map);
-
-let youMarker=null, friendMarker=null, straightLine=null, greatCircleLine=null, animationMarker=null;
-let clickCount=0;
-const EARTH_RADIUS=6371;
-const toRad=deg=>deg*Math.PI/180;
-const toDeg=rad=>rad*180/Math.PI;
-
-// --- Click Handling ---
-map.on('click', e=>{
-  if(clickCount===0) addYou(e);
-  else if(clickCount===1) addFriend(e);
-  else { reset(); map.fire('click', e); }
-});
-
-function addYou(e){
-  if(youMarker) map.removeLayer(youMarker);
-  youMarker=L.marker(e.latlng).addTo(map).bindPopup(translations[currentLang].youMarker).openPopup();
-  document.getElementById('status').innerHTML=translations[currentLang].statusFriend;
-  clickCount=1;
-}
-
-function addFriend(e){
-  if(friendMarker) map.removeLayer(friendMarker);
-  friendMarker=L.marker(e.latlng).addTo(map).bindPopup(translations[currentLang].friendMarker).openPopup();
-
-  if(straightLine) map.removeLayer(straightLine);
-  if(greatCircleLine) map.removeLayer(greatCircleLine);
-  if(animationMarker) map.removeLayer(animationMarker);
-
-  // Gerade Linie
-  straightLine=L.polyline([youMarker.getLatLng(), friendMarker.getLatLng()], {color:'#f77f00', weight:3, dashArray:'10,10', opacity:0.7}).addTo(map);
-
-  // Großkreis Linie
-  const path=generateGreatCircle(youMarker.getLatLng().lat, youMarker.getLatLng().lng, friendMarker.getLatLng().lat, friendMarker.getLatLng().lng);
-  greatCircleLine=L.polyline(path, {color:'#ffeb3b', weight:3, dashArray:'5,10', opacity:0.9}).addTo(map);
-
-  // Animierter Marker
-  animationMarker=L.circleMarker(path[0], {radius:8, color:'#ffeb3b', fillColor:'#ffeb3b', fillOpacity:1, weight:2, className:'glow-marker'}).addTo(map);
-  animateAlongPath(path, animationMarker, 50);
-
-  calculateDirection();
-  clickCount=2;
-  document.getElementById('status').innerHTML=translations[currentLang].statusDone;
-}
-
-// --- Großkreis Berechnung ---
-function generateGreatCircle(lat1, lon1, lat2, lon2, steps=100){
-  const φ1=toRad(lat1), λ1=toRad(lon1);
-  const φ2=toRad(lat2), λ2=toRad(lon2);
-  const Δφ=φ2-φ1, Δλ=λ2-λ1;
-  const a=Math.sin(Δφ/2)**2 + Math.cos(φ1)*Math.cos(φ2)*Math.sin(Δλ/2)**2;
-  const centralAngle=2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  const points=[];
-  for(let i=0;i<=steps;i++){
-    const f=i/steps;
-    const A=Math.sin((1-f)*centralAngle)/Math.sin(centralAngle);
-    const B=Math.sin(f*centralAngle)/Math.sin(centralAngle);
-    const x=A*Math.cos(φ1)*Math.cos(λ1) + B*Math.cos(φ2)*Math.cos(λ2);
-    const y=A*Math.cos(φ1)*Math.sin(λ1) + B*Math.cos(φ2)*Math.sin(λ2);
-    const z=A*Math.sin(φ1) + B*Math.sin(φ2);
-    const φi=Math.atan2(z, Math.sqrt(x*x+y*y));
-    const λi=Math.atan2(y,x);
-    points.push([toDeg(φi), toDeg(λi)]);
-  }
-  return points;
-}
-
-// --- Animation ---
-function animateAlongPath(path, marker, speed=50){
-  let index=0, growing=true;
-  function step(){
-    marker.setLatLng(path[index]);
-    let r=marker.getRadius();
-    if(growing){r+=0.3; if(r>=10) growing=false;} else {r-=0.3; if(r<=6) growing=true;}
-    marker.setRadius(r);
-    index++;
-    if(index<path.length) setTimeout(step,speed);
-    else setTimeout(()=>animateAlongPath(path, marker, speed),1000);
-  }
-  step();
-}
-
-// --- Berechnungen Compass + Tilt ---
-function calculateDirection(){
-  if(!youMarker||!friendMarker) return;
-  const you=youMarker.getLatLng(), friend=friendMarker.getLatLng();
-  const lat1=toRad(you.lat), lon1=toRad(you.lng), lat2=toRad(friend.lat), lon2=toRad(friend.lng);
-  const dLon=lon2-lon1;
-  const y=Math.sin(dLon)*Math.cos(lat2), x=Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-  let bearing=(toDeg(Math.atan2(y,x))+360)%360;
-
-  const cosC=Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(dLon);
-  const centralAngle=Math.acos(Math.max(-1,Math.min(1,cosC)));
-  const chordDistance=2*EARTH_RADIUS*Math.sin(centralAngle/2);
-  let tiltAngle=toDeg(centralAngle/2);
-
-  document.getElementById('tiltNeedle').style.transform=`rotate(${tiltAngle-90}deg)`;
-  document.getElementById('compassNeedle').style.transform=`translate(-50%,-100%) rotate(${bearing}deg)`;
-
-  const directions=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
-  const dirIndex=Math.round(bearing/22.5)%16;
-  const tiltDesc=tiltAngle<15?translations[currentLang].tiltDesc[0]:tiltAngle<45?translations[currentLang].tiltDesc[1]:tiltAngle<75?translations[currentLang].tiltDesc[2]:translations[currentLang].tiltDesc[3];
-
-  document.getElementById('compassInfo').innerHTML=`${translations[currentLang].compassInfo}: <span class="info-value">${directions[dirIndex]}</span><br><small>Azimuth: ${bearing.toFixed(1)}°</small>`;
-  document.getElementById('tiltInfo').innerHTML=`${translations[currentLang].tiltInfo}: <span class="info-value">${tiltAngle.toFixed(1)}°</span><br><small>${tiltDesc}</small><br><small>Distance through Earth: ${chordDistance.toFixed(0)} km</small>`;
-
-  drawCompassLabels();
-  drawTiltLabels();
-}
-
-function drawCompassLabels(){
-  const compass=document.getElementById('compass');
-  compass.querySelectorAll('.compass-label').forEach(el=>el.remove());
-  const labels=[{text:'N',angle:0},{text:'E',angle:90},{text:'S',angle:180},{text:'W',angle:270}];
-  labels.forEach(label=>{
-    const div=document.createElement('div'); div.className='compass-label'; div.textContent=label.text;
-    const rad=toRad(label.angle-90), r=115, x=140+r*Math.cos(rad), y=140+r*Math.sin(rad);
-    div.style.left=x-10+'px'; div.style.top=y-10+'px'; compass.appendChild(div);
-  });
-}
-
-function drawTiltLabels() {
-  const tilt=document.getElementById('tilt');
-  tilt.querySelectorAll('.tilt-label').forEach(el=>el.remove());
-  const gaugeSize=240;
-  const radius=gaugeSize*0.75;
-  const centerX=0, centerY=0;
-  const angles=[0,30,60,90];
-  angles.forEach(angle=>{
-    const rad=toRad(angle);
-    const x=centerX+radius*Math.cos(rad);
-    const y=centerY+radius*Math.sin(rad);
-    const div=document.createElement('div');
-    div.className='tilt-label';
-    div.textContent=angle+'°';
-    div.style.left=x+'px';
-    div.style.top=y+'px';
-    tilt.appendChild(div);
-  });
-}
-
-// --- Reset ---
-function reset(){
-  if(youMarker) map.removeLayer(youMarker);
-  if(friendMarker) map.removeLayer(friendMarker);
-  if(straightLine) map.removeLayer(straightLine);
-  if(greatCircleLine) map.removeLayer(greatCircleLine);
-  if(animationMarker) map.removeLayer(animationMarker);
-  youMarker=friendMarker=straightLine=greatCircleLine=animationMarker=null;
-  clickCount=0;
-  document.getElementById('tiltNeedle').style.transform='rotate(-90deg)';
-  document.getElementById('compassNeedle').style.transform='translate(-50%,-100%) rotate(0deg)';
-  document.getElementById('status').innerHTML=translations[currentLang].statusStart;
-  document.getElementById('compassInfo').innerHTML='—';
-  document.getElementById('tiltInfo').innerHTML='—';
-  drawCompassLabels(); drawTiltLabels();
-}
-
-drawCompassLabels();
-drawTiltLabels();
-</script>
+    
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="map-setup.js"></script>
+    <script src="calculations.js"></script>
+    <script src="ui-updates.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
